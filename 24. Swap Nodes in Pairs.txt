@@ -1,0 +1,44 @@
+Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4]
+Output: [2,1,4,3]
+Example 2:
+
+Input: head = []
+Output: []
+Example 3:
+
+Input: head = [1]
+Output: [1]
+ 
+
+
+solution:
+
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+
+        ListNode dum = new ListNode(0,head);
+        ListNode p = dum;
+        ListNode temp = head;
+        if(head == null){
+            return head;
+        }
+         while(temp !=null&&temp.next!= null){
+           ListNode t = temp.next;
+           temp.next = t.next;
+           t.next = temp;
+           p.next = t;
+           p = temp;
+           temp = temp.next;
+         }
+        
+    
+return dum.next;
+}
+}
