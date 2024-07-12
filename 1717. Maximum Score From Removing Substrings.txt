@@ -1,0 +1,99 @@
+You are given a string s and two integers x and y. You can perform two types of operations any number of times.
+
+Remove substring "ab" and gain x points.
+For example, when removing "ab" from "cabxbae" it becomes "cxbae".
+Remove substring "ba" and gain y points.
+For example, when removing "ba" from "cabxbae" it becomes "cabxe".
+Return the maximum points you can gain after applying the above operations on s.
+
+ 
+
+Example 1:
+
+Input: s = "cdbcbbaaabab", x = 4, y = 5
+Output: 19
+Explanation:
+- Remove the "ba" underlined in "cdbcbbaaabab". Now, s = "cdbcbbaaab" and 5 points are added to the score.
+- Remove the "ab" underlined in "cdbcbbaaab". Now, s = "cdbcbbaa" and 4 points are added to the score.
+- Remove the "ba" underlined in "cdbcbbaa". Now, s = "cdbcba" and 5 points are added to the score.
+- Remove the "ba" underlined in "cdbcba". Now, s = "cdbc" and 5 points are added to the score.
+Total score = 5 + 4 + 5 + 5 = 19.
+Example 2:
+
+Input: s = "aabbaaxybbaabb", x = 5, y = 4
+Output: 20
+
+
+solution:
+
+
+
+class Solution {
+    String str ="";
+    public int maximumGain(String s, int x, int y) {
+      String p1 = (x>y)?"ab":"ba";
+      str = s;
+      String p2 = (p1.equals("ab"))?"ba":"ab";
+        
+        int score = calcu(p1,Math.max(x,y));
+        score += calcu(p2,Math.min(x,y));
+        return score;
+    }
+
+    public int calcu(String a,int addval){
+        int cal =0;
+        char c1 = a.charAt(0);
+        char c2 = a.charAt(1);
+        StringBuilder g= new StringBuilder();
+       
+        Stack<Character>v= new Stack<>();
+        for(char c: str.toCharArray()){
+          if(c==c2 && !v.isEmpty() && v.peek()==c1){
+            cal +=addval;
+            v.pop();
+          }
+          else{
+          v.push(c);
+        }
+        }
+        while(!v.isEmpty()){
+            g.insert(0,v.pop());
+         }
+         str = g.toString();
+return cal;
+    }
+}class Solution {
+    String str ="";
+    public int maximumGain(String s, int x, int y) {
+      String p1 = (x>y)?"ab":"ba";
+      str = s;
+      String p2 = (p1.equals("ab"))?"ba":"ab";
+        
+        int score = calcu(p1,Math.max(x,y));
+        score += calcu(p2,Math.min(x,y));
+        return score;
+    }
+
+    public int calcu(String a,int addval){
+        int cal =0;
+        char c1 = a.charAt(0);
+        char c2 = a.charAt(1);
+        StringBuilder g= new StringBuilder();
+       
+        Stack<Character>v= new Stack<>();
+        for(char c: str.toCharArray()){
+          if(c==c2 && !v.isEmpty() && v.peek()==c1){
+            cal +=addval;
+            v.pop();
+          }
+          else{
+          v.push(c);
+        }
+        }
+        while(!v.isEmpty()){
+            g.insert(0,v.pop());
+         }
+         str = g.toString();
+return cal;
+    }
+}
