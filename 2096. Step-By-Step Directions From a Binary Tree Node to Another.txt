@@ -1,0 +1,98 @@
+You are given the root of a binary tree with n nodes. Each node is uniquely assigned a value from 1 to n. You are also given an integer startValue representing the value of the start node s, and a different integer destValue representing the value of the destination node t.
+
+Find the shortest path starting from node s and ending at node t. Generate step-by-step directions of such path as a string consisting of only the uppercase letters 'L', 'R', and 'U'. Each letter indicates a specific direction:
+
+'L' means to go from a node to its left child node.
+'R' means to go from a node to its right child node.
+'U' means to go from a node to its parent node.
+Return the step-by-step directions of the shortest path from node s to node t.
+
+ 
+
+Example 1:
+
+
+Input: root = [5,1,2,3,null,6,4], startValue = 3, destValue = 6
+Output: "UURL"
+Explanation: The shortest path is: 3 → 1 → 5 → 2 → 6.
+Example 2:
+
+
+Input: root = [2,1], startValue = 2, destValue = 1
+Output: "L"
+Explanation: The shortest path is: 2 → 1.
+
+
+
+solution:
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+      public TreeNode findlo(TreeNode root, int p, int q){
+        if( root == null || root.val ==p || root.val == q){
+            return root;
+        }
+        TreeNode lchild = findlo(root.left,p,q);
+        TreeNode rchild = findlo(root.right,p,q);
+      
+       if(lchild == null){
+        return rchild;
+       }
+       else if(rchild == null){
+        return lchild;
+       }
+       else{
+        return root;
+       }  
+      }
+        public boolean findpath(TreeNode root,int s,StringBuilder path){
+            if(root == null){
+                return false;
+            }
+            if(root.val == s){
+                return true;
+            }
+            path.append('L');
+            if(findpath(root.left,s,path)){
+                return true;
+            }
+            path.setLength(path.length()-1);
+           
+            path.append('R');
+            if(findpath(root.right,s,path)){
+                return true;
+            }
+            path.setLength(path.length()-1);
+        return false;
+        }
+    public String getDirections(TreeNode root, int startValue,int destValue) {
+         TreeNode loc = findlo(root,startValue,destValue);
+          StringBuilder ltos = new StringBuilder();
+          StringBuilder ltodes = new StringBuilder();
+        findpath(loc,startValue,ltos);
+        findpath(loc,destValue,ltodes);
+        StringBuilder res = new StringBuilder();
+        for(int i =0;i<ltos.length();i++){
+             res.append('U');
+        }
+        res.append(ltodes);
+        return res.toString();
+    }
+}
+
+
