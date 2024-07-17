@@ -1,0 +1,73 @@
+Given the root of a binary tree, each node in the tree has a distinct value.
+
+After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees).
+
+Return the roots of the trees in the remaining forest. You may return the result in any order.
+
+ 
+
+Example 1:
+
+
+Input: root = [1,2,3,4,5,6,7], to_delete = [3,5]
+Output: [[1,2,null,4],[6],[7]]
+Example 2:
+
+Input: root = [1,2,4,null,3], to_delete = [3]
+Output: [[1,2,4]]
+
+
+
+solution:
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode DFs(TreeNode root,HashSet<Integer>del,List<TreeNode>f){
+         if(root==null){
+            return root;
+         }
+         root.left = DFs(root.left,del,f);
+         root.right = DFs(root.right,del,f);
+         if(!del.contains(root.val)){
+            return root;
+         }
+            if(root.left != null){
+                f.add(root.left);
+            }
+            if(root.right != null){
+                f.add(root.right);
+            }
+            root.left = null;
+            root.right = null;
+            return null;
+         
+    }
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        HashSet<Integer> h = new HashSet<>();
+        for(int a : to_delete){
+        h.add(a);
+        }
+        List<TreeNode> f = new ArrayList<>();
+        root = DFs(root,h,f);
+        if(root!=null){
+            f.add(root);
+        }
+        return f;
+    }
+}
