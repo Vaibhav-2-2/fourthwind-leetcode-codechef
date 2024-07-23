@@ -1,0 +1,66 @@
+Given an array of integers nums, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.
+
+Return the sorted array.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,2,2,2,3]
+Output: [3,1,1,2,2,2]
+Explanation: '3' has a frequency of 1, '1' has a frequency of 2, and '2' has a frequency of 3.
+Example 2:
+
+Input: nums = [2,3,1,3,2]
+Output: [1,3,3,2,2]
+Explanation: '2' and '3' both have a frequency of 2, so they are sorted in decreasing order.
+Example 3:
+
+Input: nums = [-1,1,-6,4,5,-6,1,4,1]
+Output: [5,-1,4,4,-6,-6,1,1,1]
+
+
+
+solution:
+
+
+
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        List<Pair<Integer, Integer>> A = new ArrayList<>();
+        Arrays.sort(nums);
+        if(nums.length==1){
+            return nums;
+        }
+        int f =1;
+        for(int i =1;i<nums.length;i++){
+            
+            if(nums[i-1]==nums[i]){
+                f++;
+            }
+            else{
+                A.add(new Pair<>(nums[i-1],f));
+            f =1;
+            }
+            if(i == nums.length-1){
+           A.add(new Pair<>(nums[i],f));
+}
+        }
+ Collections.sort(A, new Comparator<Pair<Integer, Integer>>() {
+            @Override
+            public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue()); 
+            }
+        });
+         int[] sortedArray = new int[nums.length];
+        int index = nums.length-1;
+        for (Pair<Integer, Integer> pair : A) {
+            for (int i = 0; i < pair.getValue(); i++) {
+                sortedArray[index--] = pair.getKey();
+            }
+        }
+return sortedArray;
+    }
+}
+
+
