@@ -68,4 +68,8 @@ public class Solution {
         for (k = 0; k < temp.length; k++) {
             nums[left + k] = temp[k];
         }
+<<<<<<< HEAD
     }
+=======
+    }}
+>>>>>>> 6bb36eb8a44aa62fe3c863bd1b7a17a4855ebcfa
