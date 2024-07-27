@@ -1,0 +1,73 @@
+You are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+ 
+
+Example 1:
+
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+Example 2:
+
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 stepYou are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+ 
+
+Example 1:
+
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+Example 2:
+
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+
+
+
+
+solution:
+
+
+class Solution {
+     public int climb(int n,int i,int a[]){
+        // st1 base case
+        if(i==n){
+            return 1;
+        }
+        if(i > n){
+            return 0;
+        }
+        //    st3 check previous 
+if(a[i]!=0){
+    return a[i];
+}
+
+        //  st2 recursion
+        a[i] = climb(n,i+1,a)+climb(n,i+2,a);
+        return a[i];
+     }
+    public int climbStairs(int n) {
+       int i =0;
+       int a[] = new int[n+1];
+       int res = climb(n,i,a);
+       return res;
+    }
+}
