@@ -1,0 +1,75 @@
+A 3 x 3 magic square is a 3 x 3 grid filled with distinct numbers from 1 to 9 such that each row, column, and both diagonals all have the same sum.
+
+Given a row x col grid of integers, how many 3 x 3 contiguous magic square subgrids are there?
+
+Note: while a magic square can only contain numbers from 1 to 9, grid may contain numbers up to 15.
+
+ 
+
+Example 1:
+
+
+Input: grid = [[4,3,8,4],[9,5,1,9],[2,7,6,2]]
+Output: 1
+Explanation: 
+The following subgrid is a 3 x 3 magic square:
+
+while this one is not:
+
+In total, there is only one magic square inside the given grid.
+Example 2:
+
+Input: grid = [[8]]
+Output: 0
+
+
+
+
+solution:
+
+
+
+class Solution {
+    public int numMagicSquaresInside(int[][] grid) {
+        int ans =0;
+       if(grid.length < 3){
+        return ans;
+       }
+        for (int i = 0; i < grid.length - 2; i++) {
+            for (int j = 0; j < grid[0].length - 2; j++) {
+                if (isMagic(grid, i, j)) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+    public boolean isMagic(int[][] grid, int i, int j){
+          boolean[] seen = new boolean[10];
+        for (int k = i; k < i + 3; k++) {
+            for (int l = j; l < j + 3; l++) {
+                int num = grid[k][l];
+                if (num < 1 || num > 9 || seen[num]) {
+                    return false;
+                }
+                seen[num] = true;
+            }
+        }
+         int rows1 = grid[i][j] + grid[i][j+1] + grid[i][j+2];
+          int rows2 = grid[i+1][j] + grid[i+1][j+1] + grid[i+1][j+2];
+          int rows3 = grid[i+2][j] + grid[i+2][j+1] + grid[i+2][j+2];
+
+          int cols1 = grid[i][j] + grid[i+1][j] + grid[i+2][j];
+          int cols2 = grid[i][j+1] + grid[i+1][j+1] + grid[i+2][j+1];
+          int cols3 = grid[i][j+2] + grid[i+1][j+2] + grid[i+2][j+2];
+        
+          int dial = grid[i][j] + grid[i+1][j+1] + grid[i+2][j+2];
+          int diar = grid[i+2][j] + grid[i+1][j+1] + grid[i][j+2];
+         //System.out.print(cols1 +" "+cols2+" "+cols3+" "+diar);
+
+           return (rows1 == 15 && rows2 == 15 && rows3 == 15 && 
+                cols1 == 15 && cols2 == 15 && cols3 == 15 && 
+                dial == 15 && diar == 15);
+    }}
+
+
