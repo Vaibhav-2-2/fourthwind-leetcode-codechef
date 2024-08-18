@@ -1,0 +1,54 @@
+An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
+
+Given an integer n, return the nth ugly number.
+
+ 
+
+Example 1:
+
+Input: n = 10
+Output: 12
+Explanation: [1, 2, 3, 4, 5, 6, 8, 9, 10, 12] is the sequence of the first 10 ugly numbers.
+Example 2:
+
+Input: n = 1
+Output: 1
+Explanation: 1 has no prime factors, therefore all of its prime factors are limited to 2, 3, and 5.
+
+
+
+solution:
+
+
+class Solution {
+    public int nthUglyNumber(int n) {
+       int dp[] = new int[n];
+       int i2 = 0;
+       int i3 = 0;
+       int i5 = 0;
+       dp[0] = 1;
+       int mul2 = 2*1;
+       int mul3 = 3*1;
+       int mul5 = 5*1;
+       int next =1;
+       for(int i =1;i<n;i++){
+          next = Math.min(mul2,Math.min(mul3,mul5)); 
+          dp[i]= next;
+          if(next == mul2){
+            i2++;
+           mul2 = dp[i2]*2;
+          }
+          if(next == mul3){
+            i3++;
+           mul3 = dp[i3]*3;
+          }
+          if(next == mul5){
+            i5++;
+           mul5 = dp[i5]*5;
+          }
+       }
+       return next;
+    }
+}
+
+
